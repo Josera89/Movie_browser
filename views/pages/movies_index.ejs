@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>MOVIES</title>
+</head>
+<body>
+  <ol>
+  <% for(var i=0; i<movies.length; i++) { %>
+      <li>
+        <p><%=  movies[i].title %></p>
+        <p><%=  movies[i].overview %></p>
+        <p> Rating: <%=  movies[i].vote_average %></p>
+        <img src="http://image.tmdb.org/t/p/w500/<%= movies[i].poster_path %>" alt="">
+      </li>
+    <% } %>
+  </ol>
+</body>
+</html>
