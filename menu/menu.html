@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="/Users/JoseRamon/Library/LeapCursor.js-master/leapcursor-with-dependencies.min.js"></script> 
+<link href="stylesheet.css" type="text/css" rel="stylesheet"/>       
+</head>
+    
+    <body>
+        <table>
+            <tr>
+                <td><a href="http://www.google.com" id="btn">GOOGLE</a></td>
+                <td><a href="http://www.gmail.com" id="btn">GMAIL</a></td>
+            </tr>
+            <tr>
+                <td><a href="http://www.netflix.com" id="btn">NETFLIX</a></td>
+                <td><a href="https://www.yahoo.com/news/weather/" id="btn">WEATHER</a></td>
+            </tr>
+        </table>
+     </body>
+    
+    
+    
+    <p>Distance: <span id="distance">…</span></p>
+<script>
+var distanceDisplay = document.getElementById("distance");
+
+var controller = new Leap.Controller();
+controller.on('frame', function(frame){
+    if(frame.pointables.length > 0)
+    {
+        var touchDistance = frame.pointables[0].touchDistance;
+        distanceDisplay.innerText = touchDistance;
+    }
+    
+    
+    
+});
+controller.connect();
+</script>
+    
+    <p>Zone: <span id="zone">…</span></p>
+<script>
+var zoneDisplay = document.getElementById("zone");
+
+var controller = new Leap.Controller();
+controller.on('frame', function(frame){
+    if(frame.pointables.length > 0)
+    {
+        var touchZone = frame.pointables[0].touchZone;
+        zoneDisplay.innerText = touchZone;
+    }
+});
+controller.connect();
+</script>
+
+    
+    
+</html>

@@ -1,0 +1,38 @@
+a:hover {
+    color:white;
+}
+
+
+body {
+
+    background-color:dimgrey
+}
+
+
+table {
+   margin-top: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+td {
+   
+background-color:darkgrey;
+text-align: center;
+height:200px;
+width:200px;    
+border: 2px solid black;
+border-radius: 10%;
+}
+
+a {
+    padding: 60px;
+    color: black;
+    text-decoration: none;
+    transition: .1s all;
+}
+
+#btn {
+    
+}
