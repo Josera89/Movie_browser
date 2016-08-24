@@ -1,37 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>three.js canvas - geometry - cube</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<style>
-			body {
-				font-family: Monospace;
-				background-color: #f0f0f0;
-				margin: 0px;
-				overflow: hidden;
-			}
-		</style>
-	</head>
+    <head>
+        <% include ../partials/head %>
+    </head>
 	<body>
 
-
-		<script src="../build/three.js"></script>
-
-		<script src="js/renderers/Projector.js"></script>
-		<script src="js/renderers/CanvasRenderer.js"></script>
-
-		<script src="js/libs/stats.min.js"></script>
+		<script src="/build/three.js"></script>
+		<script src="/js/renderers/Projector.js"></script>
+		<script src="/js/renderers/CanvasRenderer.js"></script>
+		<script src="/js/libs/stats.min.js"></script>
 
 		<script>
 
+		  var movie = <%- JSON.stringify(movie) %>;
+
 			var container, stats;
-
 			var camera, scene, renderer;
-
 			var cube, plane;
 
-			var targetRotation = 3;
+			var targetRotation = 5;
 			var targetRotationOnMouseDown = 0;
 
 			var mouseX = 0;
@@ -39,8 +26,6 @@
 
 			var windowHalfX = window.innerWidth / 2;
 			var windowHalfY = window.innerHeight / 2;
-
-
 
 			init();
 			animate();
@@ -50,13 +35,7 @@
 				container = document.createElement( 'div' );
 				document.body.appendChild( container );
 
-				var info = document.createElement( 'div' );
-				info.style.position = 'absolute';
-				info.style.top = '10px';
-				info.style.width = '100%';
-				info.style.textAlign = 'center';
-				info.innerHTML = 'Drag to spin the cube';
-				container.appendChild( info );
+
 
 				camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
 				camera.position.y = 150;
@@ -75,11 +54,13 @@
 				}
 
 	      var material = new THREE.MeshFaceMaterial( [
+		      new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'http://image.tmdb.org/t/p/w500/' + movie.backdrop_path ) } ),
+		      new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'http://image.tmdb.org/t/p/w500/' + movie.backdrop_path ) } ),
+		      //TOP
+		      new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'starwars.jpeg' ) } ),
+		      //BOTTOM
 	        new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'starwars.jpeg' ) } ),
-	        new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'starwars.jpeg' ) } ),
-	        new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'starwars.jpeg' ) } ),
-	        new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'starwars.jpeg' ) } ),
-	        new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'starwars.jpeg' ) } ),
+	        new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'http://image.tmdb.org/t/p/w500/' + movie.poster_path ) } ),
 	        new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'starwars.jpeg' ) } )
 	      ]);
 
@@ -185,6 +166,10 @@
 			}
 
 		</script>
+
+		<footer class="site-footer">
+      <% include ../partials/footer %>
+    </footer>
 
 	</body>
 </html>

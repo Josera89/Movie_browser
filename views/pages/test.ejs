@@ -219,7 +219,7 @@
 
                     for ( var i = 0, il = boids.length; i < il; i ++ ) {
 
-                        if ( Math.random() > 0.6 ) continue;
+                        if ( Math.random() > 0.7 ) continue;
                         boid = boids[ i ];
                         distance = boid.position.distanceTo( this.position );
 
@@ -291,7 +291,7 @@
                 birds = [];
                 boids = [];
 
-                for ( var i = 0; i < 200; i ++ ) {
+                for ( var i = 0; i < 300; i ++ ) {
 
                     boid = boids[ i ] = new Boid();
                     boid.position.x = Math.random() * 400 - 200;
