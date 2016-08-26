@@ -1,36 +1,32 @@
 body {
   font-family: Monospace;
-  font-family: 'Lato', sans-serif;
-  background-color: #303030;
+  font-family: 'Lato', sans-serif !important;
+  background-color: #303030 !important;
   margin: 0px;
   overflow: hidden;
 }
-ul {
-    list-style-type: none;
-    margin: 0;
 
-    padding: 0;
-    overflow: hidden;
-    background-color: #212121;
-    height: 60px;
+.navbar-brand {
+  color: orange !important;
 }
 
-li {
-    float: left;
-    margin-top: 7px;
+.navbar-form {
+  background-color: none !important;
 }
 
-li a {
-    display: block;
-    color: white;
-    font-size: 16px;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
+button.btn.btn-default {
+  background-color: transparent;
+  border-style: none;
 }
 
-li a:hover:not(.active) {
-    background-color: #111;
+input.form-control {
+  background-color: transparent;
+}
+
+#signout {
+  padding: 17px;
+  color: white !important;
+  float: right !important;
 }
 
 .active {
@@ -45,6 +41,7 @@ li a:hover:not(.active) {
   position: static;
   margin-top: 50px;
   margin-bottom: -130px;
+  overflow: hidden;
 }
 
 .site-footer, .page-wrap:after {
@@ -52,7 +49,7 @@ li a:hover:not(.active) {
   height: 40px;
   color: white;
   font-size: 10px;
-  padding-top: 2px;
+  padding-top: 10px;
   text-align: center
 }
 .site-footer {

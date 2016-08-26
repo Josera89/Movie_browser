@@ -17,10 +17,6 @@ var assert = require('assert');
 
   moviesCollection.find( ).toArray(function(err, movies) {
 
-    app.get("/", (req, res) => {
-      res.redirect("/multiple_cubes");
-    });
-
     app.listen(PORT, () => {
       console.log(`Example app listening on port ${PORT}!`);
     });
@@ -29,16 +25,21 @@ var assert = require('assert');
       res.json(movies);
     });
 
-    app.get("/movies", (req, res) => {
+    app.get("/", (req, res) => {
+      res.render("pages/index");
+    });
+
+    app.get("/movies_index", (req, res) => {
       res.render("pages/movies_index", { movies: movies });
     });
+
 
     app.get("/movie_cube/:id", (req, res) => {
       var movieId = req.params.id;
       var obj_id = new ObjectID(movieId)
       console.log("movie id", movieId);
       moviesCollection.findOne({_id: obj_id},function(err, movie) {
-        res.render("pages/cube_img", {movie: movie});
+        res.render("pages/individual_movie", {movie: movie});
       });
     });
 
@@ -46,12 +47,8 @@ var assert = require('assert');
       res.render("pages/cube_img");
     });
 
-    app.get("/multiple_cubes", (req, res) => {
+    app.get("/movies", (req, res) => {
       res.render("pages/main", { movies: movies });
-    });
-
-    app.get("/test", (req, res) => {
-      res.render("pages/test");
     });
 
     app.get("/birds", (req, res) => {

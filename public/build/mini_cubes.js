@@ -6,14 +6,17 @@ $(function() {
   var LOGGING_ON = true;
   var MIN_X_CAM_POS = -675;
   var MAX_X_CAM_POS = 825;
+  var MIN_Z_CAM_POS = -1100;
+  var MAX_Z_CAM_POS = 3860;
+
 
   var SPACE_BETWEEN_MOVIES_X = 250;
   var STEP_SIZE_X = SPACE_BETWEEN_MOVIES_X;
-  var STEP_SIZE_Z = 70;
+  var STEP_SIZE_Z = 125;
 
-  var INIT_CAM_X = 75;
+  var INIT_CAM_X = 80;
   var INIT_CAM_Y = 0;
-  var INIT_CAM_Z = 4000;
+  var INIT_CAM_Z = 3860;
 
   var targetRotation = 0;
   var targetRotationOnMouseDown = 0;
@@ -46,12 +49,27 @@ $(function() {
     }
   });
 
+  $( "#search" ).submit(function( event ) {
+    var searchInput = $('#search-input').val().toUpperCase();
+    $.ajax({
+      dataType: "json",
+      url: "/movies.json",
+      success: function (movies) {
+        for (var i = 0; i < movies.length; i++) {
+          if (movies[i].original_title.toUpperCase() === searchInput) {
+            window.location.href = window.location.origin + "/movie_cube/" + movies[i]._id;
+          }
+        }
+      }
+    });
+  });
+
   //
   function init(movies) {
 
     container = document.getElementById("movie-canvas");
 
-    camera = new THREE.PerspectiveCamera( 70, $("#movie-canvas").innerWidth() / $("#movie-canvas").innerHeight(), 2.5, 2000 );
+    camera = new THREE.PerspectiveCamera( 75, $("#movie-canvas").innerWidth() / $("#movie-canvas").innerHeight(), .1, 2000 );
     console.log("height="+$("#movie-canvas").innerHeight());
     console.log("width="+$("#movie-canvas").innerWidth());
     camera.position.x = INIT_CAM_X;
@@ -84,7 +102,6 @@ $(function() {
     renderer.setClearColor( 0x424242 );
     renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( $("#movie-canvas").innerWidth(), $("#movie-canvas").innerHeight() );
-
     container.appendChild( renderer.domElement );
 
     //
@@ -93,7 +110,6 @@ $(function() {
   }
 
   function onWindowResize() {
-
     windowHalfX = $("#movie-canvas").innerWidth / 2;
     windowHalfY = $("#movie-canvas").innerHeight / 2;
     camera.aspect = $("#movie-canvas").innerWidth() / $("#movie-canvas").innerHeight();
@@ -103,7 +119,7 @@ $(function() {
 
   function createMiniCubes(movies) {
       // Create Mini cubes for each movie
-    var x = 0;
+    var x = -800;
     var z = -1100;
     for (var i = 0; i < movies.length; i++) { // Here iterate through the list of movies
       for (var j = 0; j < 8; j++) {
@@ -183,6 +199,11 @@ $(function() {
     } else if (camera.position.x < MIN_X_CAM_POS) {
       camera.position.x = MIN_X_CAM_POS;
     }
+   if ( camera.position.z > MAX_Z_CAM_POS) {
+      camera.position.z = MAX_Z_CAM_POS;
+    } else if (camera.position.z < MIN_Z_CAM_POS) {
+      camera.position.z = MIN_Z_CAM_POS;
+    }
   }
 
 
@@ -196,14 +217,18 @@ $(function() {
     renderer.render( scene, camera );
   }
 
-  $(document).on("click", onDocumentMouseDown);
+  // $(document).on("click", onDocumentMouseDown);
+  $("#movie-canvas").on("click", onDocumentMouseDown);
 
   function onDocumentMouseDown( event ) {
     console.log("event", event);
     event.preventDefault();
 
-    mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
-    mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+    mouse.x = ( event.offsetX / renderer.domElement.clientWidth ) * 2 - 1;
+    mouse.y = - ( event.offsetY / renderer.domElement.clientHeight ) * 2 + 1;
+    console.log(event.clientX);
+    console.log(event.clientY);
+
 
     raycaster.setFromCamera( mouse, camera );
 
@@ -213,5 +238,9 @@ $(function() {
     if ( intersects.length > 0 ) {
         intersects[0].object.clicked();
     }
+  }
+  ///////////////////////////////////////////////////
+  function calcNextCamPos() {
+
   }
 });
