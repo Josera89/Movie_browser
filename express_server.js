@@ -47,6 +47,10 @@ var assert = require('assert');
       res.render("pages/cube_img");
     });
 
+    app.get("/profile", (req,res) => {
+      res.render("pages/profile");
+    });
+
     app.get("/movies", (req, res) => {
       res.render("pages/main", { movies: movies });
     });

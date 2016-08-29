@@ -6,7 +6,7 @@ $(function() {
   var camera, scene, renderer;
   var cube, plane;
 
-  var targetRotation = 0;
+  var targetRotation = -6.3;
   var targetRotationOnMouseDown = 0;
 
   var mouseX = 0;
@@ -23,8 +23,10 @@ $(function() {
       $("#movie-canvas").html("");
       init(movies);
       animate();
+
     }
   });
+
 
   function find_movie_from_movies(id, movies){
     for (var i = 0; i < movies.length; i++) {
@@ -54,8 +56,7 @@ $(function() {
     container = document.getElementById("movie-canvas");
     camera = new THREE.PerspectiveCamera( 70, $("#movie-canvas").innerWidth() / $("#movie-canvas").innerHeight(), 2.5, 2000 );
 
-
-    camera.position.y = 100;
+    camera.position.y = 120;
     camera.position.z = 300;
 
     scene = new THREE.Scene();
@@ -65,11 +66,17 @@ $(function() {
     console.log("movie: ",  movie);
     createCube(movie);
 
+    //Info window
+    $("#movie-canvas").append("<div class='info'><h2>"+movie.title+"</h2><p>"+movie.release_date+"</p><p>"+movie.overview+"</p><p>Rating: "+movie.vote_average+"</p><span class='glyphicon glyphicon-star-empty' aria-hidden='true'></span><a class='play-button' href=''><span style='float:right;margin-right:80px' class='glyphicon glyphicon-play' aria-hidden='true'></span></a></div>");
+
+    $( ".play-button" ).click(function(event) {
+      event.preventDefault();
+     $("#movie-canvas").append("<div class='movie_window'><img src='/balls.gif'></div>");
+    });
 
     // Cube
     function createCube (movie) {
-      // movie = window.movie;   // TODO: delete this line after implementing find_movie_from_movies
-      var geometry = new THREE.BoxGeometry( 150, 150, 150 );
+      var geometry = new THREE.BoxGeometry( 180,180,180 );
       for ( var i = 0; i < geometry.faces.length; i += 2 ) {
         var hex = Math.random() * 0xffffff;
         geometry.faces[ i ].color.setHex( hex );
@@ -83,7 +90,7 @@ $(function() {
         //BOTTOM
         new THREE.MeshBasicMaterial( { color: 0x121212, vertexColors: THREE.FaceColors } ),
         new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'http://image.tmdb.org/t/p/w500/' + movie.poster_path ) } ),
-        new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'http://image.tmdb.org/t/p/w500/' + movie.poster_path ) } )
+        new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/play.jpeg' ) } )
       ]);
       cube = new THREE.Mesh( geometry, material );
       cube.position.y = 150;
@@ -170,7 +177,6 @@ $(function() {
   }
 
   //Keypad controls
-  // document.on("click", onDocumentMouseDown);
 
   document.onkeydown = checkKey;
   function checkKey(e) {
@@ -186,12 +192,12 @@ $(function() {
   function animate() {
     requestAnimationFrame( animate );
     render();
-
   }
 
   function render() {
     plane.rotation.y = cube.rotation.y += ( targetRotation - cube.rotation.y ) * 0.05;
     renderer.render( scene, camera );
+
   }
 });
 

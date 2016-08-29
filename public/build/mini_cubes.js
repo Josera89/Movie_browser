@@ -42,12 +42,21 @@ $(function() {
     dataType: "json",
     url: "/movies.json",
     success: function (movies) {
-      console.log("movies", movies);
-      $("#movie-canvas").html("");
-      init(movies);
+      // console.log("movies", movies);
+       $("#movie-canvas").html("");
+       init(movies);
       animate();
     }
   });
+
+  // $("#movie-canvas").hide();
+  // function hideDiv() {
+
+  // $("#movie-canvas").hide();
+
+  //   $("#movie-canvas").show();
+  // }
+  // setTimeout(hideDiv, 5000);
 
   $( "#search" ).submit(function( event ) {
     var searchInput = $('#search-input').val().toUpperCase();
